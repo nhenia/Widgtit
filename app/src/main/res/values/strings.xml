@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hint Widget</string>
+    <string-array name="hints">
+        <item>Take a deep breath.</item>
+        <item>Drink some water.</item>
+        <item>Stretch your body.</item>
+        <item>Smile at someone today.</item>
+        <item>Write down one thing you are grateful for.</item>
+        <item>Focus on the present moment.</item>
+        <item>Be kind to yourself.</item>
+        <item>Take a short walk.</item>
+        <item>Listen to your favorite song.</item>
+        <item>Read a page of a book.</item>
+    </string-array>
+</resources>
