@@ -1,24 +1,16 @@
-# Hint Widget
+# Widgtit
 
-Hint Widget is a simple Android application that provides a home screen widget displaying random helpful hints.
+A simple Android widget that provides daily hints.
 
 ## Features
+- Automatic updates when the user is present.
+- Resizable widget support.
+- Configurable hints.
 
-- **Android Widget**: A resizable home screen widget.
-- **Kotlin-based**: Built using modern Android development practices with Kotlin.
-- **Automatic Refresh**: The widget refreshes its content whenever the device is unlocked (`ACTION_USER_PRESENT`).
-- **Auto-sizing Text**: Uses Android's auto-sizing TextView to ensure hints fit the widget regardless of its size.
+## Build
+The app uses a custom versioning system.
+- `MAJOR` and `MINOR` versions are defined in `version.properties`.
+- `PATCH` is automatically incremented based on the build environment.
 
-## Building the Project
-
-To build the project, run:
-```bash
-./gradlew assembleDebug
-```
-
-## Running Tests
-
-To run unit tests, run:
-```bash
-./gradlew test
-```
+## GitHub Actions
+Every push to `main` or `master` triggers a build and tags the repository with `MAJOR.MINOR`.

@@ -1,4 +1,4 @@
-package com.example.hintwidget
+package com.nhenia.widgtit
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
