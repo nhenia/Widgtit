@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hint Widget</string>
+    <string name="app_name">Widgtit</string>
     <string-array name="hints">
         <item>Take a deep breath.</item>
         <item>Drink some water.</item>
