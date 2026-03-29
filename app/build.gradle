@@ -3,18 +3,32 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
+def versionPropsFile = file('../version.properties')
+def versionProps = new Properties()
+versionPropsFile.withInputStream { versionProps.load(it) }
+
+def major = versionProps['MAJOR'].toInteger()
+def minor = versionProps['MINOR'].toInteger()
+def patch = System.getenv("GITHUB_RUN_NUMBER") ?: "0"
+
 android {
-    namespace 'com.example.hintwidget'
+    namespace 'com.nhenia.widgtit'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.hintwidget"
+        applicationId "com.nhenia.widgtit"
         minSdk 24
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode patch.toInteger() + 1
+        versionName "${major}.${minor}.${patch}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Widgtit-v${variant.versionName}.apk"
+        }
     }
 
     buildTypes {
