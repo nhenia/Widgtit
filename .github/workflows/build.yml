@@ -34,12 +34,16 @@ jobs:
         name: widgtit-apk
         path: app/build/outputs/apk/debug/*.apk
 
-    - name: Tag Repository
+    - name: Get Version
+      id: get_version
       run: |
         MAJOR=$(grep 'MAJOR' version.properties | cut -d'=' -f2 | tr -d '[:space:]')
         MINOR=$(grep 'MINOR' version.properties | cut -d'=' -f2 | tr -d '[:space:]')
-        TAG="$MAJOR.$MINOR"
+        echo "tag=$MAJOR.$MINOR" >> $GITHUB_OUTPUT
 
+    - name: Tag Repository
+      run: |
+        TAG="${{ steps.get_version.outputs.tag }}"
         if git rev-parse "$TAG" >/dev/null 2>&1; then
           echo "Tag $TAG already exists"
         else
@@ -48,3 +52,14 @@ jobs:
           git tag "$TAG"
           git push origin "$TAG"
         fi
+
+    - name: Create Pre-Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.get_version.outputs.tag }}
+        files: app/build/outputs/apk/debug/*.apk
+        prerelease: true
+        name: Widgtit Pre-release ${{ steps.get_version.outputs.tag }}
+        body: |
+          New build for Widgtit version ${{ steps.get_version.outputs.tag }}.
+          This is an automated pre-release build.
