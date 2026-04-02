@@ -1,4 +1,4 @@
-package com.example.hintwidget
+package com.nhenia.widgtit
 
 import org.junit.Assert.assertTrue
 import org.junit.Test
