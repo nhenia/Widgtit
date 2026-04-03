@@ -1,10 +1,12 @@
 package com.nhenia.widgtit
 
 import android.appwidget.AppWidgetManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.TypedValue
 import android.widget.RemoteViews
 import kotlin.random.Random
@@ -40,6 +42,24 @@ class HintWidgetProvider : AppWidgetProvider() {
 
             val views = RemoteViews(context.packageName, R.layout.hint_widget_layout)
             views.setTextViewText(R.id.hint_text, randomHint)
+            views.setContentDescription(R.id.hint_text, context.getString(R.string.widget_content_description, randomHint))
+
+            val intent = Intent(context, HintWidgetProvider::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
+            }
+
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                appWidgetId,
+                intent,
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                } else {
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                }
+            )
+            views.setOnClickPendingIntent(R.id.widget_root, pendingIntent)
 
             // Note: Auto-sizing text in RemoteViews is available since Android 8.0 (Oreo, API 26)
             // For older versions, it might not work perfectly without a custom solution.

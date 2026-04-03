@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Widgtit</string>
+    <string name="widget_content_description">Daily hint: %1$s. Tap to refresh.</string>
     <string-array name="hints">
         <item>Take a deep breath.</item>
         <item>Drink some water.</item>
