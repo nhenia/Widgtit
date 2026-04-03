@@ -5,16 +5,13 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.TypedValue
 import android.widget.RemoteViews
 import kotlin.random.Random
 
 class HintWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
-        }
+        updateAppWidgets(context, appWidgetManager, appWidgetIds)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -23,19 +20,31 @@ class HintWidgetProvider : AppWidgetProvider() {
             val appWidgetManager = AppWidgetManager.getInstance(context)
             val thisWidget = ComponentName(context, HintWidgetProvider::class.java)
             val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
-            for (appWidgetId in appWidgetIds) {
-                updateAppWidget(context, appWidgetManager, appWidgetId)
-            }
+            updateAppWidgets(context, appWidgetManager, appWidgetIds)
         }
     }
 
     companion object {
+        private var hintsCache: Array<String>? = null
+
+        private fun getHints(context: Context): Array<String> {
+            return hintsCache ?: context.resources.getStringArray(R.array.hints).also {
+                hintsCache = it
+            }
+        }
+
         fun getRandomHint(hints: Array<String>): String {
             return hints[Random.nextInt(hints.size)]
         }
 
         fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-            val hints = context.resources.getStringArray(R.array.hints)
+            updateAppWidgets(context, appWidgetManager, intArrayOf(appWidgetId))
+        }
+
+        fun updateAppWidgets(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+            if (appWidgetIds.isEmpty()) return
+
+            val hints = getHints(context)
             val randomHint = getRandomHint(hints)
 
             val views = RemoteViews(context.packageName, R.layout.hint_widget_layout)
@@ -54,7 +63,7 @@ class HintWidgetProvider : AppWidgetProvider() {
             // the autosize features if they are supported in RemoteViews.
             // Android 8.0+ supports autosize for TextView.
 
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+            appWidgetManager.updateAppWidget(appWidgetIds, views)
         }
     }
 }
