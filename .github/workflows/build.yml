@@ -3,6 +3,8 @@ name: Build Widgtit
 on:
   push:
     branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
 
 jobs:
   build:
@@ -42,6 +44,7 @@ jobs:
         echo "tag=$MAJOR.$MINOR" >> $GITHUB_OUTPUT
 
     - name: Tag Repository
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       run: |
         TAG="${{ steps.get_version.outputs.tag }}"
         if git rev-parse "$TAG" >/dev/null 2>&1; then
@@ -54,6 +57,7 @@ jobs:
         fi
 
     - name: Create Pre-Release
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.get_version.outputs.tag }}
@@ -63,3 +67,5 @@ jobs:
         body: |
           New build for Widgtit version ${{ steps.get_version.outputs.tag }}.
           This is an automated pre-release build.
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
