@@ -25,9 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
                 scope.launch {
                     val adviceDao = database.adviceDao()
                     val hints = context.resources.getStringArray(R.array.hints)
-                    for (hint in hints) {
-                        adviceDao.insert(Advice(text = hint))
-                    }
+                    val adviceList = hints.map { Advice(text = it) }
+                    adviceDao.insertAll(adviceList)
                 }
             }
         }
