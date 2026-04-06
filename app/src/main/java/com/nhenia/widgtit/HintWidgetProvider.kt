@@ -40,19 +40,6 @@ class HintWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.hint_widget_layout)
             views.setTextViewText(R.id.hint_text, randomHint)
 
-            // Note: Auto-sizing text in RemoteViews is available since Android 8.0 (Oreo, API 26)
-            // For older versions, it might not work perfectly without a custom solution.
-            // But since our minSdk is 24, we should check if we can use it.
-            // Actually, RemoteViews has setTextViewTextSize and some other methods.
-            // RemoteViews.setRemoteAdapter can be used for collections.
-            // For simple TextView, we can use views.setTextViewTextSize(id, unit, size)
-            // But automatic resizing (autosize) is a feature of TextView itself.
-
-            // Since we can't easily measure text in RemoteViews,
-            // the best way to support "automatically resized" in a widget is using
-            // the autosize features if they are supported in RemoteViews.
-            // Android 8.0+ supports autosize for TextView.
-
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
