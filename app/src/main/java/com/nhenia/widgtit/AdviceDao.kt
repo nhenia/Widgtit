@@ -13,6 +13,9 @@ interface AdviceDao {
     @Insert
     suspend fun insert(advice: Advice)
 
+    @Insert
+    suspend fun insertAll(advice: List<Advice>)
+
     @Delete
     suspend fun delete(advice: Advice)
 }
