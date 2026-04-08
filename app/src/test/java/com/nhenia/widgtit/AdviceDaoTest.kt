@@ -1,4 +1,4 @@
-package com.nhenia.widgtit.data
+package com.nhenia.widgtit
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -14,10 +14,10 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34])
-class HintDaoTest {
+class AdviceDaoTest {
 
     private lateinit var db: AppDatabase
-    private lateinit var hintDao: HintDao
+    private lateinit var adviceDao: AdviceDao
 
     @Before
     fun createDb() {
@@ -25,7 +25,7 @@ class HintDaoTest {
             ApplicationProvider.getApplicationContext(),
             AppDatabase::class.java
         ).allowMainThreadQueries().build()
-        hintDao = db.hintDao()
+        adviceDao = db.adviceDao()
     }
 
     @After
@@ -35,22 +35,22 @@ class HintDaoTest {
 
     @Test
     fun testInsertAndGetAll() = runBlocking {
-        val hint = Hint(text = "Test Hint")
-        hintDao.insert(hint)
-        val allHints = hintDao.getAll()
-        assertEquals(1, allHints.size)
-        assertEquals("Test Hint", allHints[0].text)
+        val advice = Advice(text = "Test Hint")
+        adviceDao.insert(advice)
+        val allAdvice = adviceDao.getAllAdvice()
+        assertEquals(1, allAdvice.size)
+        assertEquals("Test Hint", allAdvice[0].text)
     }
 
     @Test
     fun testDelete() = runBlocking {
-        val hint = Hint(id = 1, text = "Delete Me")
-        hintDao.insert(hint)
-        var allHints = hintDao.getAll()
-        assertEquals(1, allHints.size)
+        val advice = Advice(id = 1, text = "Delete Me")
+        adviceDao.insert(advice)
+        var allAdvice = adviceDao.getAllAdvice()
+        assertEquals(1, allAdvice.size)
 
-        hintDao.delete(allHints[0])
-        allHints = hintDao.getAll()
-        assertTrue(allHints.isEmpty())
+        adviceDao.delete(allAdvice[0])
+        allAdvice = adviceDao.getAllAdvice()
+        assertTrue(allAdvice.isEmpty())
     }
 }
