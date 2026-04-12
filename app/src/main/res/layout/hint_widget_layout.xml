@@ -3,8 +3,26 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:background="@drawable/widget_background">
+    android:padding="8dp">
+
+    <View
+        android:id="@+id/widget_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_background" />
+
+    <ImageView
+        android:id="@+id/widget_pattern"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/widget_border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/hint_text"
@@ -12,6 +30,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="#FFFFFF"
+        android:padding="16dp"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="8sp"
         android:autoSizeMaxTextSize="100sp"

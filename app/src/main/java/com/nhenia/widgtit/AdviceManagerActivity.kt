@@ -76,6 +76,11 @@ class AdviceManagerActivity : AppCompatActivity() {
             startActivityForResult(intent, OPEN_FILE_REQUEST_CODE)
         }
 
+        findViewById<Button>(R.id.button_settings).setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
         updateList()
     }
 

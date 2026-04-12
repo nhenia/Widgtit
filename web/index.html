@@ -7,8 +7,53 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="widget-container" class="widget-card">
-        <p id="hint-text">Hint goes here</p>
+    <div class="main-container">
+        <div id="widget-container" class="widget-card">
+            <p id="hint-text">Hint goes here</p>
+        </div>
+
+        <button id="settings-toggle" title="Settings">⚙️</button>
+
+        <div id="settings-panel" class="settings-panel hidden">
+            <h3>Customization</h3>
+
+            <label for="theme-select">Theme:</label>
+            <select id="theme-select"></select>
+
+            <label for="font-select">Font:</label>
+            <select id="font-select">
+                <option value="sans-serif">Sans-Serif</option>
+                <option value="serif">Serif</option>
+                <option value="monospace">Monospace</option>
+                <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Default</option>
+                <option value="'Comic Sans MS', cursive">Casual</option>
+                <option value="'Georgia', serif">Classic</option>
+                <option value="'Courier New', Courier, monospace">Typewriter</option>
+                <option value="'Impact', Charcoal, sans-serif">Bold</option>
+                <option value="'Trebuchet MS', Helvetica, sans-serif">Modern</option>
+            </select>
+
+            <label for="font-size-range">Font Size:</label>
+            <input type="range" id="font-size-range" min="1" max="3" step="0.2" value="1.4">
+
+            <label for="border-width-select">Border Width:</label>
+            <select id="border-width-select">
+                <option value="1px">Small</option>
+                <option value="4px">Medium</option>
+                <option value="8px">Large</option>
+            </select>
+
+            <label for="bg-pattern-select">Background Pattern:</label>
+            <select id="bg-pattern-select">
+                <option value="none">None</option>
+                <option value="dots">Dots</option>
+                <option value="lines">Lines</option>
+                <option value="grid">Grid</option>
+                <option value="stars">Stars</option>
+            </select>
+
+            <button id="close-settings">Close</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

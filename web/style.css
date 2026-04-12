@@ -4,12 +4,21 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #2c3e50; /* Darker background to see transparency better */
+    background-color: #2c3e50;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+.main-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .widget-card {
-    background-color: rgba(0, 0, 0, 0.5); /* 50% transparent black */
+    background-color: rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 24px;
     padding: 24px;
@@ -20,14 +29,55 @@ body {
     align-items: center;
     cursor: pointer;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(4px); /* Modern glassmorphism effect */
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, background-color 0.2s ease, border-width 0.2s ease;
     user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Patterns */
+.widget-card.pattern-dots::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 10px 10px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.widget-card.pattern-lines::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: linear-gradient(0deg, transparent 9px, currentColor 10px);
+    background-size: 100% 10px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.widget-card.pattern-grid::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.widget-card.pattern-stars::before {
+    content: '★';
+    position: absolute;
+    top: 10px; right: 10px;
+    font-size: 40px;
+    opacity: 0.15;
+    pointer-events: none;
 }
 
 .widget-card:active {
     transform: scale(0.98);
-    background-color: rgba(0, 0, 0, 0.6);
 }
 
 #hint-text {
@@ -37,4 +87,67 @@ body {
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 1.4;
+    z-index: 1;
+}
+
+#settings-toggle {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.3s;
+}
+
+#settings-toggle:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.settings-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 280px;
+    z-index: 10;
+}
+
+.settings-panel.hidden {
+    display: none;
+}
+
+.settings-panel h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.settings-panel label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.settings-panel select, .settings-panel input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+#close-settings {
+    margin-top: 10px;
+    padding: 8px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#close-settings:hover {
+    background: #2980b9;
 }
