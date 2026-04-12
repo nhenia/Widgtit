@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SettingsActivity" />
+
         <receiver android:name=".HintWidgetProvider"
             android:exported="true">
             <intent-filter>
