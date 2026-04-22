@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     val adviceDao = database.adviceDao()
-                    val hints = context.resources.getStringArray(R.array.hints)
+                    val hints = HintWidgetProvider.cachedStringArrays ?: context.resources.getStringArray(R.array.hints)
                     val adviceList = hints.map { Advice(text = it) }
                     adviceDao.insertAll(adviceList)
                 }

@@ -6,6 +6,7 @@ A simple Android widget that provides daily hints.
 - Automatic updates when the user is present.
 - Resizable widget support.
 - Configurable hints.
+- Batched Updates: Widget updates and Room database inserts are performed in batches to minimize overhead.
 
 ## Build
 The app uses a custom versioning system.
