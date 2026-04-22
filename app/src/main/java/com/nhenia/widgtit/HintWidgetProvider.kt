@@ -23,9 +23,7 @@ class HintWidgetProvider : AppWidgetProvider() {
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                for (appWidgetId in appWidgetIds) {
-                    updateAppWidget(context, appWidgetManager, appWidgetId)
-                }
+                updateAppWidget(context, appWidgetManager, appWidgetIds)
             } finally {
                 pendingResult?.finish()
             }
@@ -41,9 +39,7 @@ class HintWidgetProvider : AppWidgetProvider() {
                     val appWidgetManager = AppWidgetManager.getInstance(context)
                     val thisWidget = ComponentName(context, HintWidgetProvider::class.java)
                     val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
-                    for (appWidgetId in appWidgetIds) {
-                        updateAppWidget(context, appWidgetManager, appWidgetId)
-                    }
+                    updateAppWidget(context, appWidgetManager, appWidgetIds)
                 } finally {
                     pendingResult?.finish()
                 }
@@ -52,18 +48,24 @@ class HintWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
+        var cachedStringArrays: Array<String>? = null
+
         fun getRandomHint(hints: List<Advice>): String {
             if (hints.isEmpty()) return "No hints available"
             return hints[Random.nextInt(hints.size)].text
         }
 
-        suspend fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+        suspend fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
             try {
+                if (cachedStringArrays == null) {
+                    cachedStringArrays = context.resources.getStringArray(R.array.hints)
+                }
                 val db = AppDatabase.getDatabase(context, CoroutineScope(Dispatchers.IO))
                 val adviceDao = db.adviceDao()
                 val hints = adviceDao.getAllAdvice()
 
                 val randomHint = getRandomHint(hints)
+
 
                 val views = RemoteViews(context.packageName, R.layout.hint_widget_layout)
 
@@ -149,7 +151,7 @@ class HintWidgetProvider : AppWidgetProvider() {
                 )
                 views.setOnClickPendingIntent(R.id.widget_root, pendingIntent)
 
-                appWidgetManager.updateAppWidget(appWidgetId, views)
+                appWidgetManager.updateAppWidget(appWidgetIds, views)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
